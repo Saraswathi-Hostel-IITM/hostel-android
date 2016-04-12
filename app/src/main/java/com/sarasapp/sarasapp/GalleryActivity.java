@@ -37,13 +37,12 @@ public class GalleryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GetTask gt = new GetTask();
-        gt.execute();
+
         setContentView(R.layout.activity_gallery);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+/*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,12 +50,15 @@ public class GalleryActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
         LinearLayoutManager layoutManager;
 
-        mProgressView = findViewById(R.id.login_progress);
+        mProgressView = findViewById(R.id.photo_progress);
         rvNot = (RecyclerView)findViewById(R.id.rvGallery);
         layoutManager = new LinearLayoutManager(GalleryActivity.this);
+
+        GetTask gt = new GetTask();
+        gt.execute();
 
         //set the recycler view to use the linear layout manager
         rvNot.setLayoutManager(layoutManager);
