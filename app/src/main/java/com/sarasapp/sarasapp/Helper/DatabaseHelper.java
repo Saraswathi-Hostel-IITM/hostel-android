@@ -58,7 +58,7 @@ public class DatabaseHelper {
         ourHelper.close();
     }
 
-    public long addPet(ContentValues cv) {
+    public long addPhoto(ContentValues cv) {
         open();
         long id = ourDatabase.insert(Photo.TABLE_NAME, null, cv);
         Log.d("dmydb","PET ADDED");
@@ -66,7 +66,7 @@ public class DatabaseHelper {
         return id;
     }
 
-    public ArrayList<Photo> getAllPets () {
+    public ArrayList<Photo> getAllPhotos () {
         open();
         String[] columns = Photo.columns;
         Cursor c = ourDatabase.query(Photo.TABLE_NAME, columns, null, null, null, null, null);

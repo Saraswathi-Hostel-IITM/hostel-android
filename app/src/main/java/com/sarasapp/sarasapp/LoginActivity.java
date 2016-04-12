@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
+        //populateAutoComplete();
 
         //checkPlayServices();
 
@@ -255,12 +255,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 0;
+        return password.length() > 2;
     }
 
     /**
@@ -386,26 +386,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             PostParam postpassword = new PostParam("password",mPassword);
             iPostParams.add(postemail);
             iPostParams.add(postpassword);
-            //ResponseJSON = PostRequest.execute("http://192.168.43.66/login_buyer.php", iPostParams, null);
             ResponseJSON = PostRequest.execute(URLConstants.URLLogin, iPostParams, null);
             Log.d("RESPONSE", ResponseJSON.toString());
             try {
-                if(ResponseJSON.getJSONObject("data").getInt("result")==1) {
-                    JSONObject trans = new JSONObject();
-                    JSONObject translist = ResponseJSON.getJSONObject("data").getJSONObject("Transactions");
-                    for (int i=0; i<ResponseJSON.getJSONObject("data").getInt("length"); i++){
-                        trans = translist.getJSONObject(String.valueOf(i));
-//                        Log.d(LOG_TAG, "Category of event is " + event.getCate)
-                    }
+                if(ResponseJSON.getJSONObject("data").getBoolean("result")) {
                     return true;
                 }
-                else if(ResponseJSON.getJSONObject("data").getInt("result")==0) {
+                else {
                     return false;
                 }
-              /*  else if (mEmail.equals("abc@def")&&mPassword.equals("123456"))
-                {
-                    return true;
-                }*/
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -420,7 +409,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             try {
-                if (ResponseJSON.getJSONObject("data").getInt("result")==1) {
+                if (ResponseJSON.getJSONObject("data").getBoolean("result")) {
                    /* Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(i);*/
                     Intent intent = new Intent(LoginActivity.this,GalleryActivity.class);
@@ -430,7 +419,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     intent = new Intent(LoginActivity.this, IE_RegistrationIntentService.class);
                     startService(intent);
                     finish();
-                } else if(ResponseJSON.getJSONObject("data").getInt("result")==0){
+                } else if(ResponseJSON.getJSONObject("data").getJSONObject("err").getInt("code") == 345 ){
                     mPasswordView.setError(getString(R.string.error_incorrect_password));
                     mPasswordView.requestFocus();
                 }else {
