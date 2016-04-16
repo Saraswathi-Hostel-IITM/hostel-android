@@ -14,15 +14,17 @@ import java.util.ArrayList;
  * Created by kevinselvaprasanna on 4/2/16.
  */
 public class Photo {
-    public static String imgurl;
+    public static String imgurl,id;
     public static final String TABLE_NAME = "Gallery";
-    public static String[] columns = {"imgurl"};
+    public static String[] columns = {"imgurl","id"};
 
-    public Photo(String imgurl) {
+    public Photo(String imgurl,String id) {
         this.imgurl = imgurl;
+        this.id = id;
     }
 
     public Photo(JSONObject jphoto) {
+
     }
 
     public static ArrayList<Photo> getArrayList(Cursor c) {
@@ -34,7 +36,7 @@ public class Photo {
     }
 
     public static Photo parseNot(Cursor c) {
-        Photo pet = new Photo(c.getString(0));
+        Photo pet = new Photo(c.getString(0),c.getString(1));
         return pet;
     }
 
@@ -45,6 +47,7 @@ public class Photo {
     public static void savePhoto(Context mContext){
         ContentValues cv = new ContentValues();
         cv.put("imgurl",imgurl);
+        cv.put("id",id);
         DatabaseHelper dh = new DatabaseHelper(mContext);
         dh.addPhoto(cv);
     }

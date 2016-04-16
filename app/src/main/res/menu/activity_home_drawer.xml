@@ -11,6 +11,14 @@
             android:icon="@drawable/ic_setting_light"
             android:title="My Profile" />
         <item
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/ic_setting_light"
+            android:title="Notifications" />
+    <item
+        android:id="@+id/nav_contacts"
+        android:icon="@drawable/ic_menu_call"
+        android:title="Contacts" />
+        <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Gallery" />
@@ -24,14 +32,14 @@
             android:title="Complaints" />
     </group>
 
-    <item android:title="Communicate">
+   <!-- <item android:title="Communicate">
         <menu>
             <item
                 android:id="@+id/nav_contacts"
                 android:icon="@drawable/ic_menu_call"
                 android:title="Contacts" />
         </menu>
-    </item>
+    </item>-->
 
     <group android:checkableBehavior="single">
         <item

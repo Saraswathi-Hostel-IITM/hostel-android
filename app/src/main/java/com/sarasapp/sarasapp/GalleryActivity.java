@@ -44,16 +44,6 @@ public class GalleryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-/*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
         LinearLayoutManager layoutManager;
 
         mProgressView = findViewById(R.id.photo_progress);
@@ -62,11 +52,7 @@ public class GalleryActivity extends AppCompatActivity {
 
         GetTask gt = new GetTask();
         gt.execute();
-
-        //set the recycler view to use the linear layout manager
         rvNot.setLayoutManager(layoutManager);
-
-        //initialize events feed adapter
         GalleryAdapter photoAdapter = new GalleryAdapter(GalleryActivity.this , Photo.getAllPhotos(GalleryActivity.this));
         rvNot.setAdapter(photoAdapter);
     }
@@ -138,7 +124,7 @@ public class GalleryActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            ResponseJSON = PostRequest.execute(URLConstants.URLPhoto, iPostParams, null);
+            /*ResponseJSON = PostRequest.execute(URLConstants.URLPhoto, iPostParams, null);
             try {
                 JSONObject data = ResponseJSON.getJSONObject("data");
                 Photo photo;
@@ -147,12 +133,13 @@ public class GalleryActivity extends AppCompatActivity {
                 for (int i=0; i<ResponseJSON.getJSONObject("data").getInt("length"); i++){
                     jphoto = data.getJSONObject(String.valueOf(i));
                     photo = new Photo(jphoto);
+
                     photo.savePhoto(GalleryActivity.this);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Log.d("RESPONSE", ResponseJSON.toString());
+            Log.d("RESPONSE", ResponseJSON.toString());*/
             return null;
         }
 

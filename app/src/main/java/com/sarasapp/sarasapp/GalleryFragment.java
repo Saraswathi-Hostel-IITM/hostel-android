@@ -4,6 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +26,14 @@ import com.sarasapp.sarasapp.Objects.PostParam;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -36,6 +47,11 @@ public class GalleryFragment extends Fragment {
 
     public GalleryFragment() {
         // Empty constructor required for fragment subclasses
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -118,6 +134,8 @@ public class GalleryFragment extends Fragment {
                 for (int i=0; i<ResponseJSON.getJSONObject("data").getInt("length"); i++){
                     jphoto = data.getJSONObject(String.valueOf(i));
                     photo = new Photo(jphoto);
+                    saveFile(getActivity(),DownloadImageBitmap(jphoto.getString("imgurl")),jphoto.getString("id"));
+                    photo.id = jphoto.getString("id");
                     photo.savePhoto(getActivity());
                 }
             } catch (JSONException e) {
@@ -126,6 +144,58 @@ public class GalleryFragment extends Fragment {
             Log.d("RESPONSE", ResponseJSON.toString());
             return null;
         }
+
+
+        private Bitmap DownloadImageBitmap(String url){
+            HttpURLConnection connection    = null;
+            InputStream is                  = null;
+
+            try {
+                URL get_url     = new URL(url);
+                connection      = (HttpURLConnection) get_url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.connect();
+                is              = new BufferedInputStream(connection.getInputStream());
+                final Bitmap bitmap = BitmapFactory.decodeStream(is);
+                // ??????????
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            finally {
+                connection.disconnect();
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return null;
+        }
+
+        public void saveFile(Context context, Bitmap b, String picName){
+            FileOutputStream fos;
+            String TAG = "SAVEFILE";
+            try {
+                fos = context.openFileOutput(picName, Context.MODE_PRIVATE);
+                b.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                fos.close();
+            }
+            catch (FileNotFoundException e) {
+                Log.d(TAG, "file not found");
+                e.printStackTrace();
+            }
+            catch (IOException e) {
+                Log.d(TAG, "io exception");
+                e.printStackTrace();
+            }
+
+        }
+
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
