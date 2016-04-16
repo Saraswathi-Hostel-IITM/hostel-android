@@ -41,6 +41,7 @@ public class IE_GCMListenerService extends GcmListenerService{
     @Override
     public void onMessageReceived(String from, Bundle data) {
 
+        sendNotification("SarasApp",data.toString());
 
 
 

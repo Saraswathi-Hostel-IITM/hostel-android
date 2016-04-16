@@ -77,6 +77,10 @@
         <activity
             android:name=".DiscussionDetails"
             android:label="@string/title_activity_discussion_details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ComplaintDetails"
+            android:label="@string/title_activity_complaint_details"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

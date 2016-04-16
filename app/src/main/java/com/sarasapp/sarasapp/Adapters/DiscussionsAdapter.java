@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-// import com.sarasapp.sarasapp.DiscussionDetails;
+
 import com.sarasapp.sarasapp.DiscussionDetails;
 import com.sarasapp.sarasapp.Objects.Complaint;
 import com.sarasapp.sarasapp.Objects.DiscussionTopic;
