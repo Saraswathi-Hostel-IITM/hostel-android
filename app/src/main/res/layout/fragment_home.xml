@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#424242">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="270dp">
+    
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:src="@drawable/saras_interior"
+        android:scaleType="centerCrop"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#AA000000"
+        android:text="WELCOME TO SARASWATHI HOSTEL"
+        android:gravity="center_horizontal|bottom"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="22sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:textColor="#FFFFFF"
+        android:padding="20dp"
+        android:fontFamily="sans-serif-light"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Deep within the dark labyrinths of Guindy National Park, amid a semi-concrete jungle lay a camp of humanity. Many a heroes have taken refuge here on their way through academia. Eras have passed, but the proud tradition set by these alumni are still carried on by the new bearers, for the glory shall stretch on through time, unto the vanishing point of infinity. \n\nGrottoes: To some, \'those are bumper scrabble points mate.\', to the other, \'cut the pseud ,dude! Pearl Jam: To one, \'sustenance, man!\', to the other, \'WHAT! they changed the jam again... G*d^v ki maa ka! \: To one and all ; \'G*d^v ki maa ka!... \' Where does one find such a varied bunch of individuals? Well if not at Saras then where? \n\nSaraswathi Hostel, where the enthusiasm flows on, throughout the year. A place where at any given point of time one can find a tube light switched on, a bog overflowing, a football being smashed , a guitar being strummed and a smile . Saras , a way of life, a stream of thought, an unparalleled attitude , a never dying spirit and home Realizing the bittersweet symphony of life at Saras; ........and you thought we didn't care!!!!!"/>
+
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>
