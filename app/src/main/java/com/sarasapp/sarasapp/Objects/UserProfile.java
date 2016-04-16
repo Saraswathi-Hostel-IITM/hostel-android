@@ -20,6 +20,19 @@ public class UserProfile {
         editor.putString("email",email);
         editor.commit();
     }
+
+    public static void setUserid(String id,Context context){
+        SharedPreferences preferences = context.getSharedPreferences("sp", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("userid",id);
+        editor.commit();
+    }
+    public static void setRoll(String roll,Context context){
+        SharedPreferences preferences = context.getSharedPreferences("sp", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("roll",roll);
+        editor.commit();
+    }
     public static void setToken(String token, Context context){
         SharedPreferences preferences = context.getSharedPreferences("sp", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -38,6 +51,14 @@ public class UserProfile {
     public static String getToken(Context context) {
         SharedPreferences pref = context.getSharedPreferences("sp", Context.MODE_PRIVATE);
         return pref.getString("token", "");
+    }
+    public static String getUserid(Context context) {
+        SharedPreferences pref = context.getSharedPreferences("sp", Context.MODE_PRIVATE);
+        return pref.getString("userid", "");
+    }
+    public static String getRoll(Context context) {
+        SharedPreferences pref = context.getSharedPreferences("sp", Context.MODE_PRIVATE);
+        return pref.getString("roll", "");
     }
 
 

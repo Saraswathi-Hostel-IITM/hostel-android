@@ -147,6 +147,7 @@ public class GalleryActivity extends AppCompatActivity {
                 for (int i=0; i<ResponseJSON.getJSONObject("data").getInt("length"); i++){
                     jphoto = data.getJSONObject(String.valueOf(i));
                     photo = new Photo(jphoto);
+
                     photo.savePhoto(GalleryActivity.this);
                 }
             } catch (JSONException e) {

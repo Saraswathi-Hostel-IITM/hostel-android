@@ -399,6 +399,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
+
             }
 
             return false;
@@ -416,9 +417,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                    /* Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(i);*/
 
+                    UserProfile.setToken(ResponseJSON.getJSONObject("data").getJSONObject("data").getString("access_token"),LoginActivity.this);
+                    UserProfile.setRoll(mEmail,LoginActivity.this);
+
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("userid", ResponseJSON.getJSONObject("data").getJSONObject("data").getJSONObject("user").getString("_id"));
                     editor.commit();
+
+                    UserProfile.setUserid( ResponseJSON.getJSONObject("data").getJSONObject("data").getJSONObject("user").getString("_id"),LoginActivity.this);
 
                     // Toast.makeText(getApplicationContext(), ResponseJSON.getJSONObject("data").getJSONObject("user").getString("_id"), Toast.LENGTH_LONG).show();
 
@@ -435,6 +441,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     Snackbar.make(mLoginFormView,"Network not available",Snackbar.LENGTH_LONG);
                 }
             } catch (JSONException e) {
+                Snackbar.make(mLoginFormView,"Network not available",Snackbar.LENGTH_LONG);
                 e.printStackTrace();
             }
         }
