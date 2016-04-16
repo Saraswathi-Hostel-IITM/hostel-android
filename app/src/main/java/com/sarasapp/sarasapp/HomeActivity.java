@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+<<<<<<< HEAD
 import com.sarasapp.sarasapp.Constants.URLConstants;
 import com.sarasapp.sarasapp.Network.PostRequest;
 import com.sarasapp.sarasapp.Objects.PostParam;
@@ -27,6 +28,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+=======
+import com.sarasapp.sarasapp.Services.IE_RegistrationIntentService;
+>>>>>>> 1da9c99529472c9bc95d80b5914a09c79e814a20
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,6 +41,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        startService(new Intent(HomeActivity.this, IE_RegistrationIntentService.class));
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -143,7 +148,6 @@ public class HomeActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_notifications) {
             Fragment fragment = new NotificationsFragment();
-
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
