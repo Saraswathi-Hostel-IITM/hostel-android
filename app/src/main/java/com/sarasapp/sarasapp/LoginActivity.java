@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
@@ -31,6 +32,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sarasapp.sarasapp.Constants.URLConstants;
 import com.sarasapp.sarasapp.Network.PostRequest;
@@ -83,7 +85,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         if(UserProfile.getEmail(LoginActivity.this)!="")
         {
-            Intent i =new Intent(LoginActivity.this,GalleryActivity.class);
+            Intent i =new Intent(LoginActivity.this,HomeActivity.class);
             startActivity(i);
             finish();
             /*if (checkPlayServices()) {
@@ -410,14 +412,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             try {
                 if (ResponseJSON.getJSONObject("data").getBoolean("result")) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("USER",0);
                    /* Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(i);*/
-                    Intent intent = new Intent(LoginActivity.this,GalleryActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("userid", ResponseJSON.getJSONObject("data").getJSONObject("data").getJSONObject("user").getString("_id"));
+                    editor.commit();
+
+                    // Toast.makeText(getApplicationContext(), ResponseJSON.getJSONObject("data").getJSONObject("user").getString("_id"), Toast.LENGTH_LONG).show();
+
+                    Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
                     intent.putExtra("LOGIN", true);
                     startActivity(intent);
-                    intent = new Intent(LoginActivity.this, IE_RegistrationIntentService.class);
-                    startService(intent);
+
+//                    Toast.makeText(getApplicationContext(), ResponseJSON.getJSONObject("data").getJSONObject("data").getJSONObject("user").getString("_id"), Toast.LENGTH_LONG).show();
                     finish();
                 } else if(ResponseJSON.getJSONObject("data").getJSONObject("err").getInt("code") == 345 ){
                     mPasswordView.setError(getString(R.string.error_incorrect_password));

@@ -3,19 +3,16 @@ package com.sarasapp.sarasapp;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.ViewGroup;
 
 import com.sarasapp.sarasapp.Adapters.GalleryAdapter;
 import com.sarasapp.sarasapp.Constants.URLConstants;
@@ -28,37 +25,30 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class GalleryActivity extends AppCompatActivity {
-
+/**
+ * Created by adarsh on 14/4/16.
+ */
+public class GalleryFragment extends Fragment {
     JSONObject ResponseJSON;
     ArrayList<PostParam> iPostParams;
     RecyclerView rvNot;
     private View mProgressView;
+
+    public GalleryFragment() {
+        // Empty constructor required for fragment subclasses
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_gallery, container, false);
+        getActivity().setTitle("New Fragment");
 
-        setContentView(R.layout.activity_gallery);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-/*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
         LinearLayoutManager layoutManager;
 
-        mProgressView = findViewById(R.id.photo_progress);
-        rvNot = (RecyclerView)findViewById(R.id.rvGallery);
-        layoutManager = new LinearLayoutManager(GalleryActivity.this);
+        mProgressView = rootView.findViewById(R.id.photo_progress);
+        rvNot = (RecyclerView)rootView.findViewById(R.id.rvGallery);
+        layoutManager = new LinearLayoutManager(rootView.getContext());
 
         GetTask gt = new GetTask();
         gt.execute();
@@ -67,32 +57,12 @@ public class GalleryActivity extends AppCompatActivity {
         rvNot.setLayoutManager(layoutManager);
 
         //initialize events feed adapter
-        GalleryAdapter photoAdapter = new GalleryAdapter(GalleryActivity.this , Photo.getAllPhotos(GalleryActivity.this));
+        GalleryAdapter photoAdapter = new GalleryAdapter(getActivity() , Photo.getAllPhotos(getActivity()));
         rvNot.setAdapter(photoAdapter);
+
+        return rootView;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_gallery, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if(id== android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
@@ -128,6 +98,7 @@ public class GalleryActivity extends AppCompatActivity {
             //mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
+
     public class GetTask extends AsyncTask<Void, Void, Boolean> {
 
         @Override
@@ -147,7 +118,7 @@ public class GalleryActivity extends AppCompatActivity {
                 for (int i=0; i<ResponseJSON.getJSONObject("data").getInt("length"); i++){
                     jphoto = data.getJSONObject(String.valueOf(i));
                     photo = new Photo(jphoto);
-                    photo.savePhoto(GalleryActivity.this);
+                    photo.savePhoto(getActivity());
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -163,5 +134,4 @@ public class GalleryActivity extends AppCompatActivity {
 
         }
     }
-
 }
