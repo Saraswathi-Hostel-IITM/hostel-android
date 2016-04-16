@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sarasapp.sarasapp.Constants.URLConstants;
+import com.sarasapp.sarasapp.Network.HttpRequest;
 import com.sarasapp.sarasapp.Network.PostRequest;
 import com.sarasapp.sarasapp.Objects.PostParam;
 import com.sarasapp.sarasapp.Objects.UserProfile;
@@ -223,7 +225,7 @@ public class ProfileFragment extends Fragment {
             }
 
 
-            ResponseJSON = PostRequest.execute(URLConstants.URLProfile, jsonObject, null);
+            ResponseJSON = HttpRequest.execute("POST",URLConstants.URLProfile,null, jsonObject);
             Log.d("RESPONSE",ResponseJSON.toString());
 
             return null;
@@ -234,6 +236,9 @@ public class ProfileFragment extends Fragment {
             try {
                 if(ResponseJSON.getJSONObject("data").getBoolean("result")) {
                     super.onPostExecute(aVoid);
+                    Fragment fragment = new ContactsFragment();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
                 }else {
                     Toast.makeText(getActivity(), "Server is not working", Toast.LENGTH_LONG).show();
