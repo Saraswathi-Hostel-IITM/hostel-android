@@ -10,6 +10,10 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_setting_light"
             android:title="My Profile" />
+    <item
+        android:id="@+id/nav_contacts"
+        android:icon="@drawable/ic_menu_call"
+        android:title="Contacts" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
@@ -24,13 +28,13 @@
             android:title="Complaints" />
     </group>
 
-    <item android:title="Communicate">
+   <!-- <item android:title="Communicate">
         <menu>
             <item
                 android:id="@+id/nav_contacts"
                 android:icon="@drawable/ic_menu_call"
                 android:title="Contacts" />
         </menu>
-    </item>
+    </item>-->
 
 </menu>

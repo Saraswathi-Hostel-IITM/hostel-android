@@ -44,16 +44,6 @@ public class GalleryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-/*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
         LinearLayoutManager layoutManager;
 
         mProgressView = findViewById(R.id.photo_progress);
@@ -62,11 +52,7 @@ public class GalleryActivity extends AppCompatActivity {
 
         GetTask gt = new GetTask();
         gt.execute();
-
-        //set the recycler view to use the linear layout manager
         rvNot.setLayoutManager(layoutManager);
-
-        //initialize events feed adapter
         GalleryAdapter photoAdapter = new GalleryAdapter(GalleryActivity.this , Photo.getAllPhotos(GalleryActivity.this));
         rvNot.setAdapter(photoAdapter);
     }

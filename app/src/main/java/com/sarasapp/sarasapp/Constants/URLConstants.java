@@ -8,4 +8,5 @@ public class URLConstants {
     public static String URLLogin = SERVER + "user/details/login/";
     public static String URLGCM_Register = SERVER + "gcmid/";
     public static String URLPhoto =  SERVER + "photo/";
+    public static String URLProfile =  SERVER + "";
 }

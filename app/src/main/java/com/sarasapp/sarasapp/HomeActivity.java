@@ -106,6 +106,10 @@ public class HomeActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
         } else if (id == R.id.nav_contacts) {
+            Fragment fragment = new ContactsFragment();
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
         }
 

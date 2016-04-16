@@ -32,7 +32,7 @@ public class DatabaseHelper {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE " + Photo.TABLE_NAME + "(imgurl VARCHAR)");
+            db.execSQL("CREATE TABLE " + Photo.TABLE_NAME + "(imgurl VARCHAR, id VARCHAR)");
             Log.d("dmydb", "DATABSE CREATED");
         }
         @Override
@@ -61,7 +61,7 @@ public class DatabaseHelper {
     public long addPhoto(ContentValues cv) {
         open();
         long id = ourDatabase.insert(Photo.TABLE_NAME, null, cv);
-        Log.d("dmydb","PET ADDED");
+        Log.d("dmydb","PHOTO ADDED");
         close();
         return id;
     }
