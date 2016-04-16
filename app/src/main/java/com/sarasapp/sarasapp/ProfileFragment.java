@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sarasapp.sarasapp.Constants.URLConstants;
@@ -43,16 +45,17 @@ public class ProfileFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    EditText name,password;
-    String sname,spass;
-    Button update;
+    EditText name,phone,password;
+    TextView tvphone,tvemail;
+    String sname,sphone,spass;
+    Button edit,update;
+    TextInputLayout tiname,tiphone,tipass;
     View page,progress;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -91,15 +94,48 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootview = inflater.inflate(R.layout.fragment_profile, container, false);
         name = (EditText)rootview.findViewById(R.id.name);
+        phone = (EditText)rootview.findViewById(R.id.phone);
         password = (EditText)rootview.findViewById(R.id.password);
         update = (Button) rootview.findViewById(R.id.update);
         page = rootview.findViewById(R.id.profilepage);
         progress = rootview.findViewById(R.id.update_progress);
+        tvphone =(TextView) rootview.findViewById(R.id.tvphone);
+        tvemail =(TextView)rootview.findViewById(R.id.tvemail);
+        edit = (Button)rootview.findViewById(R.id.edit_profile);
+        tiname = (TextInputLayout)rootview.findViewById(R.id.tiname);
+        tiphone = (TextInputLayout)rootview.findViewById(R.id.tiphone);
+        tipass = (TextInputLayout)rootview.findViewById(R.id.tipass);
+        if(UserProfile.getEmail(getActivity())==""){
+            tvphone.setVisibility(View.GONE);
+            tvemail.setVisibility(View.GONE);
+            edit.setVisibility(View.GONE);
+            tiname.setVisibility(View.VISIBLE);
+            tiphone.setVisibility(View.VISIBLE);
+            tipass.setVisibility(View.VISIBLE);
+            update.setVisibility(View.VISIBLE);
+        }else {
+            tvemail.setText("Email:" + UserProfile.getEmail(getActivity()));
+            tvphone.setText("Mobile no:"+ UserProfile.getPhone(getActivity()));
+        }
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvphone.setVisibility(View.GONE);
+                tvemail.setVisibility(View.GONE);
+                edit.setVisibility(View.GONE);
+                tiname.setVisibility(View.VISIBLE);
+                tiphone.setVisibility(View.VISIBLE);
+                tipass.setVisibility(View.VISIBLE);
+                update.setVisibility(View.VISIBLE);
+            }
+        });
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sname = name.getText().toString();
                 spass = password.getText().toString();
+                sphone = phone.getText().toString();
                 UpdateTask ut = new UpdateTask();
                 ut.execute();
             }
@@ -108,28 +144,8 @@ public class ProfileFragment extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
@@ -192,17 +208,29 @@ public class ProfileFragment extends Fragment {
         protected Void doInBackground(String... params) {
 
             ArrayList<PostParam> instiPostParams = new ArrayList<PostParam>();
-            instiPostParams.add(new PostParam("name",sname));
-            instiPostParams.add(new PostParam("password",spass));
+            JSONObject jsonObject = new JSONObject();
+            JSONObject dataObject = new JSONObject();
+            JSONObject detailsObject = new JSONObject();
+            try {
+                detailsObject.put("email",sname);
+                detailsObject.put("phoneno",sphone);
+                dataObject.put("password",spass);
+                dataObject.putOpt("details",detailsObject);
+                jsonObject.put("access_token",UserProfile.getToken(getActivity()));
+                jsonObject.putOpt("data",dataObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
 
-            ResponseJSON = PostRequest.execute(URLConstants.URLProfile, instiPostParams, null);
+            ResponseJSON = PostRequest.execute(URLConstants.URLProfile, jsonObject, null);
             Log.d("RESPONSE",ResponseJSON.toString());
 
             return null;
         }
         @Override
         protected void onPostExecute(Void aVoid) {
+            showProgress(false);
             try {
                 if(ResponseJSON.getJSONObject("data").getBoolean("result")) {
                     super.onPostExecute(aVoid);

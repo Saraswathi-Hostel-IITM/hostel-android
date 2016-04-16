@@ -87,11 +87,16 @@ public class HomeActivity extends AppCompatActivity
             // Handle the camera action
         }
         else if (id == R.id.nav_profile) {
-
+            Fragment fragment = new ProfileFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         }
 
         else if (id == R.id.nav_gallery) {
-            startActivity(new Intent(HomeActivity.this, GalleryActivity.class));
+            Fragment fragment = new ProfileFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
 
         } else if (id == R.id.nav_slideshow) {
             Fragment fragment = new DiscussionsFragment();
@@ -107,6 +112,13 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_contacts) {
             Fragment fragment = new ContactsFragment();
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+        }
+        else if (id == R.id.nav_notifications) {
+            Fragment fragment = new NotificationsFragment();
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();

@@ -2,6 +2,7 @@ package com.sarasapp.sarasapp.Objects;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.app.FragmentActivity;
 
 
 public class UserProfile {
@@ -18,6 +19,12 @@ public class UserProfile {
         SharedPreferences preferences = context.getSharedPreferences("sp", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("email",email);
+        editor.commit();
+    }
+    public static void setPhone(String phone,Context context){
+        SharedPreferences preferences = context.getSharedPreferences("sp", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("phone",phone);
         editor.commit();
     }
 
@@ -47,6 +54,10 @@ public class UserProfile {
         SharedPreferences pref = context.getSharedPreferences("sp", Context.MODE_PRIVATE);
         return pref.getString("email", "");
     }
+    public static String getPhone(Context context) {
+        SharedPreferences pref = context.getSharedPreferences("sp", Context.MODE_PRIVATE);
+        return pref.getString("phone", "");
+    }
 
     public static String getToken(Context context) {
         SharedPreferences pref = context.getSharedPreferences("sp", Context.MODE_PRIVATE);
@@ -60,7 +71,6 @@ public class UserProfile {
         SharedPreferences pref = context.getSharedPreferences("sp", Context.MODE_PRIVATE);
         return pref.getString("roll", "");
     }
-
 
 
 

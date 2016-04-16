@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -106,6 +107,79 @@ public class PostRequest {
         }
     }
 
+    public static JSONObject execute(String urlString,JSONObject jsonObject, String token){
+
+        URL url;
+        int status = 989;
+        HttpURLConnection connection = null;
+        Log.d(LOG_TAG, urlString);
+        //Dummy response
+        JSONObject jsonResponse = new JSONObject();
+        try {
+
+            jsonResponse.put("status", status);
+
+            //Create connection
+            url = new URL(urlString);
+            connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("content-type","application/json; charset=utf-8");
+            connection.setRequestProperty("Authorization", "Bearer " + token);
+
+            //Setting url parameters for post request
+
+            //Connection properties
+            connection.setRequestProperty("Content-Language", "en-US");
+            //connection.setRequestProperty("Content-Length", "" + Integer.toString(jsonObject.getBytes().length));
+            connection.setUseCaches (false);
+            connection.setDoInput(true);
+            connection.setConnectTimeout(15000);
+            connection.setDoOutput(true);
+            Log.d("post   req ", jsonObject.toString());
+
+            //Send request
+            OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
+            wr.write (jsonObject.toString());
+            wr.flush ();
+            //wr.close ();
+
+            //Check if response code is 200 OK
+            status = connection.getResponseCode();
+            jsonResponse.put("status", status);
+
+            if(status/100 != 2){
+                return jsonResponse;
+            }
+
+            //Get Response
+            InputStream is = connection.getInputStream();
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+            String line;
+            StringBuffer response = new StringBuffer();
+            Log.d(LOG_TAG, response.toString());
+            while((line = rd.readLine()) != null) {
+                response.append(line);
+                response.append('\r');
+            }
+            rd.close();
+
+            try {
+                jsonResponse.put("data", new JSONObject(response.toString()));
+            } catch (JSONException e){
+                jsonResponse.put("data", new JSONObject("{ \"response\":" + response.toString() + "}"));
+            }
+            return jsonResponse;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return jsonResponse;
+        } finally {
+
+            if(connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
     private static String urlEncode(ArrayList<PostParam> params) {
         String urlParameters = null;
         try {

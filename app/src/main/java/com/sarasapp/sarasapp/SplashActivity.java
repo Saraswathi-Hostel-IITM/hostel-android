@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.sarasapp.sarasapp.Objects.UserProfile;
+
 public class SplashActivity extends Activity {
 
     // Splash screen timer
@@ -14,6 +16,18 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(UserProfile.getEmail(SplashActivity.this)!="")
+        {
+            Intent i =new Intent(SplashActivity.this,HomeActivity.class);
+            startActivity(i);
+            finish();
+            /*if (checkPlayServices()) {
+                // Start IntentService to register this application with GCM.
+                Intent intent = new Intent(LoginActivity.this, IE_RegistrationIntentService.class);
+                startService(intent);
+            }
+            finish();*/
+        }
         setContentView(R.layout.activity_splash);
 
         new Handler().postDelayed(new Runnable() {

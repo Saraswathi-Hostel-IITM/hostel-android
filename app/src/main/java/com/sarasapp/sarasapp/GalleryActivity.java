@@ -124,7 +124,7 @@ public class GalleryActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            ResponseJSON = PostRequest.execute(URLConstants.URLPhoto, iPostParams, null);
+            /*ResponseJSON = PostRequest.execute(URLConstants.URLPhoto, iPostParams, null);
             try {
                 JSONObject data = ResponseJSON.getJSONObject("data");
                 Photo photo;
@@ -139,7 +139,7 @@ public class GalleryActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Log.d("RESPONSE", ResponseJSON.toString());
+            Log.d("RESPONSE", ResponseJSON.toString());*/
             return null;
         }
 

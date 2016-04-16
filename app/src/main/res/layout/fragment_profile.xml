@@ -26,25 +26,68 @@
     <!-- TODO: Update blank fragment layout -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/tiname"
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
+            android:hint="Email"
             android:imeActionId="@+id/login"
             android:imeActionLabel="@string/action_sign_in_short"
             android:imeOptions="actionUnspecified"
             android:inputType="text"
             android:maxLines="1"
             android:singleLine="true" />
+    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:id="@+id/tiphone"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone No."
+                    android:imeActionId="@+id/login"
+                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true" />
 
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Email : abc@saras.com"
+                android:textColor="@color/cardview_light_background"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/tvemail"
+                android:padding="10dp"
+               />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Phone : 2234234"
+                android:textColor="@color/cardview_light_background"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/tvphone"
+                android:padding="10dp"
+                />
+
+            <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                android:id="@+id/tipass"
+        android:layout_height="wrap_content"
+                android:visibility="gone">
 
         <EditText
             android:id="@+id/password"
@@ -64,8 +107,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Update Profile"
-        android:id="@+id/update"
+        android:id="@+id/edit_profile"
         android:layout_gravity="center_horizontal" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update Profile"
+                android:id="@+id/update"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"/>
             </LinearLayout>
     </ScrollView>
 
