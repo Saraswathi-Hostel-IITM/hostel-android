@@ -418,6 +418,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("userid", ResponseJSON.getJSONObject("data").getJSONObject("data").getJSONObject("user").getString("_id"));
+                    editor.putString("access_token", ResponseJSON.getJSONObject("data").getJSONObject("data").getString("access_token"));
                     editor.commit();
 
                     // Toast.makeText(getApplicationContext(), ResponseJSON.getJSONObject("data").getJSONObject("user").getString("_id"), Toast.LENGTH_LONG).show();

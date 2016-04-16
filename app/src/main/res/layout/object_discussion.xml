@@ -7,12 +7,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
         <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/matt_circle"
-            android:layout_margin="20dp"/>
+            android:layout_margin="10dp"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -32,8 +33,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="on 7 May"
+                    android:text="Last Updated 7 May"
                     android:id="@+id/datetext"
+                    android:textSize="12sp"
                     android:paddingLeft="10dp"
                     android:textColor="#FFFFFF"/>
             </LinearLayout>

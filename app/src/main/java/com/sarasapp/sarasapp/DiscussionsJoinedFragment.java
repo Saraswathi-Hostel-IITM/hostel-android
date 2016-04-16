@@ -17,6 +17,10 @@ import com.sarasapp.sarasapp.Adapters.DiscussionsAdapter;
 import com.sarasapp.sarasapp.Objects.Complaint;
 import com.sarasapp.sarasapp.Objects.DiscussionTopic;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +28,7 @@ import java.util.List;
 public class DiscussionsJoinedFragment extends Fragment{
     RecyclerView recyclerView;
     private DiscussionsAdapter mAdapter;
+    public List<DiscussionTopic> complaintdata;
 
     public DiscussionsJoinedFragment() {
         // Required empty public constructor
@@ -40,27 +45,28 @@ public class DiscussionsJoinedFragment extends Fragment{
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_discussions_joined, container, false);
 
+        complaintdata = new ArrayList<DiscussionTopic>();
+
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        return rootView;
+    }
+
+    public void setdata(JSONArray array) {
         List<DiscussionTopic> complaintdata = new ArrayList<DiscussionTopic>();
-        DiscussionTopic c = new DiscussionTopic("MM14B001", "Lets play COD", "Let's play COD");
-        complaintdata.add(c);
-        DiscussionTopic c2 = new DiscussionTopic("EE14B013", "Saras Wing Videos & RG", "Saras Wing Videos & RG");
-        complaintdata.add(c2);
-        DiscussionTopic c3 = new DiscussionTopic("EE14B060", "Your opinion on the new entrance?", "Your opinion on the new entrance");
-        complaintdata.add(c3);
-        DiscussionTopic c4 = new DiscussionTopic("EE14B060", "Monkey Menace", "Monkey Menace");
-        complaintdata.add(c4);
-        DiscussionTopic c5 = new DiscussionTopic("MM14B001", "DC++ New hubs", "DC++ new hubs");
-        complaintdata.add(c4);
-        DiscussionTopic c6 = new DiscussionTopic("EE14B013", "Saras Alumni meet", "Saras Alumni meet");
-        complaintdata.add(c4);
+        for(int i=0;i<array.length();i++) {
+            try {
+                JSONObject ob = array.getJSONObject(i);
+                DiscussionTopic dt = new DiscussionTopic("MM14B001", ob.getString("caption"), ob.getString("_id"), ob.getString("dateUpdated").split("T")[0]);
+                complaintdata.add(dt);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         mAdapter = new DiscussionsAdapter(getActivity(), complaintdata);
         recyclerView.setAdapter(mAdapter);
-
-        return rootView;
     }
 
 }

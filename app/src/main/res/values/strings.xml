@@ -20,4 +20,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_discussion_details">DiscussionDetails</string>
+    <string name="title_activity_complaint_details">ComplaintDetails</string>
 </resources>
