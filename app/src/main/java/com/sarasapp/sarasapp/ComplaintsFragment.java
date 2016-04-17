@@ -149,7 +149,10 @@ public class ComplaintsFragment extends Fragment {
                     for(int i=0;i<dataarray.length();i++) {
                         JSONObject on1 = dataarray.getJSONObject(i);
                         if(on1.getString("state").equals("Active"))
-                            openarr.put(on1);
+                            if(on1.getString("status").equals("Pending"))
+                                openarr.put(on1);
+                            else if(on1.getString("status").equals("Approved"))
+                                closedarr.put(on1);
                         else
                             closedarr.put(on1);
                     }

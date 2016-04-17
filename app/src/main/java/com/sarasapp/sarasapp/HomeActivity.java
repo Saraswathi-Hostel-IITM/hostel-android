@@ -130,7 +130,7 @@ public class HomeActivity extends AppCompatActivity
         }
 
         else if (id == R.id.nav_gallery) {
-            Fragment fragment = new ProfileFragment();
+            Fragment fragment = new TempGalleryFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 

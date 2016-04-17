@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sarasapp.sarasapp.Objects.Contact;
@@ -29,13 +30,15 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView name,email,phone;
+        TextView name,email,phone, post;
+        ImageView contactPic;
         public ViewHolder(View itemView) {
             super(itemView);
             name = (TextView)itemView.findViewById(R.id.name);
             phone = (TextView)itemView.findViewById(R.id.phone);
             email = (TextView)itemView.findViewById(R.id.email);
-
+            post = (TextView)itemView.findViewById(R.id.posttext);
+            contactPic = (ImageView)itemView.findViewById(R.id.contactpic);
         }
     }
 
@@ -54,9 +57,11 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.name.setText(mItems.get(position).name);
-        holder.email.setText(mItems.get(position).email);
-        holder.phone.setText(mItems.get(position).phone);
+        holder.name.setText(mItems.get(position).getName());
+        holder.email.setText(mItems.get(position).getEmail());
+        holder.phone.setText(mItems.get(position).getPhone());
+        holder.post.setText(mItems.get(position).getPost());
+        holder.contactPic.setImageResource(mItems.get(position).getImageID());
     }
 
 
