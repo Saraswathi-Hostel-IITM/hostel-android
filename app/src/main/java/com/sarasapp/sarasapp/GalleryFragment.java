@@ -19,10 +19,12 @@ import android.view.ViewGroup;
 
 import com.sarasapp.sarasapp.Adapters.GalleryAdapter;
 import com.sarasapp.sarasapp.Constants.URLConstants;
+import com.sarasapp.sarasapp.Network.HttpRequest;
 import com.sarasapp.sarasapp.Network.PostRequest;
 import com.sarasapp.sarasapp.Objects.Photo;
 import com.sarasapp.sarasapp.Objects.PostParam;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -125,14 +127,14 @@ public class GalleryFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            ResponseJSON = PostRequest.execute(URLConstants.URLPhoto, iPostParams, null);
+            ResponseJSON = HttpRequest.execute("GET","http://54.169.0.11:8000/thing/details/get?criteria[type]=GALLERY", null, null);
             try {
-                JSONObject data = ResponseJSON.getJSONObject("data");
+                JSONArray data = ResponseJSON.getJSONArray("data");
                 Photo photo;
                 JSONObject jphoto;
                 ArrayList<Photo> photos = new ArrayList<Photo>();
-                for (int i=0; i<ResponseJSON.getJSONObject("data").getInt("length"); i++){
-                    jphoto = data.getJSONObject(String.valueOf(i));
+                for (int i=0; i<data.length(); i++){
+                    jphoto = data.getJSONObject(i);
                     photo = new Photo(jphoto);
                     saveFile(getActivity(),DownloadImageBitmap(jphoto.getString("imgurl")),jphoto.getString("id"));
                     photo.id = jphoto.getString("id");

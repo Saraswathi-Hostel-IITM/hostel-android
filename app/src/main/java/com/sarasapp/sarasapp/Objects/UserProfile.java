@@ -40,6 +40,12 @@ public class UserProfile {
         editor.putString("roll",roll);
         editor.commit();
     }
+    public static void setPassword(String roll,Context context){
+        SharedPreferences preferences = context.getSharedPreferences("sp", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("pass",roll);
+        editor.commit();
+    }
     public static void setToken(String token, Context context){
         SharedPreferences preferences = context.getSharedPreferences("sp", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -70,6 +76,10 @@ public class UserProfile {
     public static String getRoll(Context context) {
         SharedPreferences pref = context.getSharedPreferences("sp", Context.MODE_PRIVATE);
         return pref.getString("roll", "");
+    }
+    public static String getPassword(Context context) {
+        SharedPreferences pref = context.getSharedPreferences("sp", Context.MODE_PRIVATE);
+        return pref.getString("pass", "");
     }
 
 

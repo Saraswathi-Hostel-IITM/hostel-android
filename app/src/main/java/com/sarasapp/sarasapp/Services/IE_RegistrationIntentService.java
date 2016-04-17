@@ -14,8 +14,12 @@ import android.util.Log;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+import com.sarasapp.sarasapp.Network.HttpRequest;
 import com.sarasapp.sarasapp.Network.PostRequest;
+import com.sarasapp.sarasapp.Objects.PostParam;
+import com.sarasapp.sarasapp.Objects.UserProfile;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -47,7 +51,7 @@ public class IE_RegistrationIntentService extends IntentService {
                 InstanceID instanceID = InstanceID.getInstance(this);
                 /*String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
                         GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);*/
-                token = instanceID.getToken("253985857110", GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+                token = instanceID.getToken("836977731511", GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
                 if((!token.equals(Old_ID)))
                     sharedPreferences.edit().putBoolean("sentTokenToServer", false).apply();
                 // [END get_token]
@@ -89,7 +93,22 @@ public class IE_RegistrationIntentService extends IntentService {
      * token The new token.
      */
     private void sendRegistrationToServer(String freshtoken) {
-
+        ArrayList<PostParam> instiPostParams = new ArrayList<PostParam>();
+        JSONObject jsonObject = new JSONObject();
+        JSONObject dataObject = new JSONObject();
+        JSONObject detailsObject = new JSONObject();
+        try {
+            detailsObject.putOpt("properties",new JSONObject().put("gcmId",freshtoken));
+            dataObject.put("password",UserProfile.getPassword(IE_RegistrationIntentService.this));
+            dataObject.putOpt("details",detailsObject);
+            jsonObject.put("access_token",UserProfile.getToken(IE_RegistrationIntentService.this));
+            jsonObject.putOpt("data",dataObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d("gcm req",jsonObject.toString());
+        JSONObject ResponseJson = HttpRequest.execute("POST","http://54.169.0.11:8000/user/details/update",null,jsonObject);
+        Log.d("gcm reg",ResponseJson.toString());
     }
 
 
