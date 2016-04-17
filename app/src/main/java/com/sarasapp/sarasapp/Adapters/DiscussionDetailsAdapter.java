@@ -14,14 +14,15 @@ import android.widget.TextView;
 
 import com.sarasapp.sarasapp.DiscussionDetails;
 import com.sarasapp.sarasapp.Objects.Complaint;
+import com.sarasapp.sarasapp.Objects.DiscussionDetail;
 import com.sarasapp.sarasapp.Objects.DiscussionTopic;
 import com.sarasapp.sarasapp.R;
 
 import java.util.List;
 
-public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.MyViewHolder> {
+public class DiscussionDetailsAdapter extends RecyclerView.Adapter<DiscussionDetailsAdapter.MyViewHolder> {
 
-    private List<DiscussionTopic> itemList;
+    private List<DiscussionDetail> itemList;
     private Context context;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -31,13 +32,13 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
             super(view);
             name = (TextView) view.findViewById(R.id.nametext);
             caption = (TextView) view.findViewById(R.id.captiontext);
-            idtext = (TextView) view.findViewById(R.id.idtext);
+            // idtext = (TextView) view.findViewById(R.id.idtext);
             datetext = (TextView) view.findViewById(R.id.datetext);
         }
     }
 
 
-    public DiscussionsAdapter(Context context, List<DiscussionTopic> itemList) {
+    public DiscussionDetailsAdapter(Context context, List<DiscussionDetail> itemList) {
         this.context = context;
         this.itemList = itemList;
     }
@@ -45,29 +46,18 @@ public class DiscussionsAdapter extends RecyclerView.Adapter<DiscussionsAdapter.
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.object_discussion, parent, false);
+                .inflate(R.layout.object_discussion_details, parent, false);
 
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        final DiscussionTopic complaint = itemList.get(position);
+        final DiscussionDetail complaint = itemList.get(position);
         holder.name.setText(complaint.getName());
         holder.caption.setText(complaint.getCaption());
-        holder.idtext.setText("#242");
+        // holder.idtext.setText("#242");
         holder.datetext.setText("Last Updated " + complaint.getDate());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(context.getApplicationContext(), DiscussionDetails.class);
-                i.putExtra("name", complaint.getName());
-                i.putExtra("id", complaint.getID());
-                i.putExtra("date", complaint.getDate());
-                i.putExtra("caption", complaint.getCaption());
-                context.startActivity(i);
-            }
-        });
     }
 
     @Override
