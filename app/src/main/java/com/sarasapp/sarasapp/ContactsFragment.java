@@ -72,9 +72,24 @@ public class ContactsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contacts, container, false);
+        getActivity().setTitle("Contacts");
         LinearLayoutManager layoutManager;
         RecyclerView rvNot;
         ArrayList<Contact> cots = new ArrayList<Contact>();
+        Contact ct = new Contact("General Secretary", "Sandeep R", "1234567890", "saras.gensec@gmail.com", R.drawable.sandeep_1);
+        cots.add(ct);
+        Contact ct2 = new Contact("Hostel Legislator", "Mahanth", "1234567890", "saras.legislator@gmail.com", R.drawable.mahanth_1);
+        cots.add(ct2);
+        Contact ct3 = new Contact("Technical Affairs Secretary", "Krishna Changlani", "1234567890", "saras.techsec@gmail.com", R.drawable.krishna_1);
+        cots.add(ct3);
+        Contact ct4 = new Contact("Literary Affairs Secretary", "Kalyan Perisetty", "1234567890", "saras.litsoc@gmail.com", R.drawable.kalyan_1);
+        cots.add(ct4);
+        Contact ct5 = new Contact("Social Affairs Secretary", "Srikanth Musti", "1234567890", "saras.litsoc@gmail.com", R.drawable.srikanth_1);
+        cots.add(ct5);
+        Contact ct6 = new Contact("Sports Secretary", "Akhil Reddy", "1234567890", "saras.gensec@gmail.com", R.drawable.akhil_1);
+        cots.add(ct6);
+        Contact ct7 = new Contact("Health and Hygiene Secretary", "Vulchi Kalyan", "1234567890", "saras.hhs@gmail.com", R.drawable.matt_circle);
+        cots.add(ct7);
 
 
         rvNot = (RecyclerView)view.findViewById(R.id.rvContacts);
