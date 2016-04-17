@@ -27,7 +27,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="7 May"
+                    android:text="16 April"
                     android:id="@+id/datetext"
                     android:textColor="#FFFFFF"/>
             </LinearLayout>

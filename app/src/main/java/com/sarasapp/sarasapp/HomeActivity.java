@@ -38,6 +38,7 @@ public class HomeActivity extends AppCompatActivity
     public String access_token;
     private UserLogoutTask mAuthTask = null;
     private NewDiscTask mAuthTaskDesc = null;
+    private NewCompTask mAuthTaskComp = null;
     public SharedPreferences sharedPreferences;
     public FloatingActionButton fab;
 
@@ -117,11 +118,15 @@ public class HomeActivity extends AppCompatActivity
             Fragment fragment = new HomeFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+            fab.setVisibility(View.GONE);
         }
         else if (id == R.id.nav_profile) {
             Fragment fragment = new ProfileFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+            fab.setVisibility(View.GONE);
         }
 
         else if (id == R.id.nav_gallery) {
@@ -149,6 +154,14 @@ public class HomeActivity extends AppCompatActivity
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+            fab.setVisibility(View.VISIBLE);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    popup_complaint();
+                }
+            });
 
         } else if (id == R.id.nav_contacts) {
             Fragment fragment = new ContactsFragment();
@@ -321,6 +334,123 @@ public class HomeActivity extends AppCompatActivity
             iPostParams.add(postemail);
             iPostParams.add(postinput);
             ResponseJSON = PostRequest.execute(URLConstants.URLNewDesc, iPostParams, null);
+            Log.d("RESPONSE", ResponseJSON.toString());
+            try {
+                if(ResponseJSON.getJSONObject("data").getBoolean("result")) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return false;
+            // TODO: register the new account here.
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            mAuthTask = null;
+
+            try {
+                if (ResponseJSON.getJSONObject("data").getBoolean("result")) {
+                   /* Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(i);*/
+
+                    // Toast.makeText(getApplicationContext(), ResponseJSON.getJSONObject("data").getJSONObject("user").getString("_id"), Toast.LENGTH_LONG).show();
+
+//                    Toast.makeText(getApplicationContext(), ResponseJSON.getJSONObject("data").getJSONObject("data").getJSONObject("user").getString("_id"), Toast.LENGTH_LONG).show();
+                } else if(ResponseJSON.getJSONObject("data").getJSONObject("err").getInt("code") == 345 ){
+
+                }else {
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mAuthTask = null;
+        }
+    }
+
+    private void popup_complaint() {
+        LayoutInflater layoutInflater = LayoutInflater.from(HomeActivity.this);
+
+        View promptView = layoutInflater.inflate(R.layout.popup_complaint, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HomeActivity.this);
+
+        // set prompts.xml to be the layout file of the alertdialog builder
+        alertDialogBuilder.setView(promptView);
+
+        final EditText input = (EditText) promptView.findViewById(R.id.userInput);
+        final EditText input2 = (EditText) promptView.findViewById(R.id.userInput2);
+
+        // setup a dialog window
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // get user input and set it to result
+//                        editTextMainScreen.setText(input.getText());
+                        mAuthTaskComp = new NewCompTask(access_token, input.getText().toString(), input2.getText().toString());
+                        mAuthTaskComp.execute((Void) null);
+
+                    }
+                })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create an alert dialog
+        AlertDialog alertD = alertDialogBuilder.create();
+
+        alertD.show();
+    }
+
+    public class NewCompTask extends AsyncTask<Void, Void, Boolean> {
+
+        private final String mToken;
+        private final String mInput, mInput2;
+        JSONObject ResponseJSON;
+
+        NewCompTask(String token, String input, String input2) {
+            mToken = token;
+            mInput = input;
+            mInput2 = input2;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service.
+
+
+          /*  for (String credential : DUMMY_CREDENTIALS) {
+                String[] pieces = credential.split("check@check.com:hello");
+                if (pieces[0].equals(mEmail)) {
+                    // Account exists, return true if the password matches.
+                    return pieces[1].equals(mPassword);
+                }
+            }*/
+
+            ArrayList<PostParam> iPostParams = new ArrayList<PostParam>();
+            PostParam postemail = new PostParam("access_token", mToken);
+            PostParam postinput = new PostParam("caption", mInput);
+            PostParam postinput2 = new PostParam("description", mInput2);
+            PostParam postcolab = new PostParam("collaborators", "[]");
+            iPostParams.add(postemail);
+            iPostParams.add(postinput);
+            iPostParams.add(postinput2);
+            iPostParams.add(postcolab);
+            ResponseJSON = PostRequest.execute(URLConstants.URLNewComp, iPostParams, null);
             Log.d("RESPONSE", ResponseJSON.toString());
             try {
                 if(ResponseJSON.getJSONObject("data").getBoolean("result")) {

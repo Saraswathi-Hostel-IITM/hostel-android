@@ -13,4 +13,6 @@ public class URLConstants {
     public static String URLNewDesc = SERVER + "discussion/details/create/";
     public static String URLLogout = SERVER + "user/details/logout/";
     public static String URLProfile = SERVER + "user/details/update";
+    public static String URLCompList = SERVER + "complaint/details/list/";
+    public static String URLNewComp = SERVER + "complaint/details/create/";
 }

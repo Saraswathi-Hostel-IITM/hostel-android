@@ -10,11 +10,10 @@ public class Complaint {
     public Complaint() {
     }
 
-    public Complaint(String name, String caption, String description, Integer status) {
+    public Complaint(String name, String caption, String id, Integer status) {
         this.name = name;
         this.caption = caption;
-        this.description = description;
-        this.idname = "";
+        this.idname = id;
         this.date = "";
         this.status = status;
     }

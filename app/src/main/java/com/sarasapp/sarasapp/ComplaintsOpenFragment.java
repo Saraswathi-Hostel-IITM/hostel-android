@@ -13,7 +13,13 @@ package com.sarasapp.sarasapp;
         import android.view.ViewGroup;
 
         import com.sarasapp.sarasapp.Adapters.ComplaintsAdapter;
+        import com.sarasapp.sarasapp.Adapters.DiscussionsAdapter;
         import com.sarasapp.sarasapp.Objects.Complaint;
+        import com.sarasapp.sarasapp.Objects.DiscussionTopic;
+
+        import org.json.JSONArray;
+        import org.json.JSONException;
+        import org.json.JSONObject;
 
         import java.util.ArrayList;
         import java.util.List;
@@ -56,6 +62,22 @@ public class ComplaintsOpenFragment extends Fragment{
 
 
         return rootView;
+    }
+
+    public void setdata(JSONArray array) {
+        List<Complaint> complaintdata = new ArrayList<Complaint>();
+        for(int i=0;i<array.length();i++) {
+            try {
+                JSONObject ob = array.getJSONObject(i);
+                Complaint dt = new Complaint("MM14B001", ob.getString("caption"), ob.getString("_id"), 1);
+                complaintdata.add(dt);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        mAdapter = new ComplaintsAdapter(getActivity(), complaintdata);
+        recyclerView.setAdapter(mAdapter);
     }
 
 }
